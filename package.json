@@ -1,0 +1,60 @@
+{
+  "name": "gitshine",
+  "version": "0.1.0",
+  "description": "Shine up your git commits - Interactive CLI to edit commit messages",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "gitshine": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "prepublishOnly": "npm run build",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "git",
+    "commit",
+    "message",
+    "editor",
+    "rebase",
+    "cli",
+    "interactive",
+    "amend",
+    "history",
+    "typescript"
+  ],
+  "author": "Pushkaraj Kulkarni",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/thepushkaraj/gitshine"
+  },
+  "homepage": "https://github.com/thepushkaraj/gitshine#readme",
+  "bugs": {
+    "url": "https://github.com/thepushkaraj/gitshine/issues"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "dependencies": {
+    "@inquirer/prompts": "^8.0.2",
+    "chalk": "^5.6.2",
+    "commander": "^14.0.2",
+    "ora": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.15"
+  }
+}
