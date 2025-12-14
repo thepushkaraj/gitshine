@@ -1,13 +1,12 @@
-# gitshine ✨
+# gitshine
 
-Shine up your git commits — Interactive CLI to edit commit messages.
-
-> ⚠️ **Designed for personal/solo projects only.** This tool rewrites git history. Do not use on shared or collaborative repositories without understanding the implications.
+Shine up your git commits — Interactive CLI to edit and squash commit messages.
 
 ## Features
 
 - 📋 **Interactive commit list** - Browse through recent commits with author and date info
 - ✏️ **Inline editing** - Edit commit messages directly in the terminal (no editor popup)
+- 🔗 **Squash commits** - Combine multiple commits into one with a custom message
 - 🔄 **Automatic rebase** - Handles git rebase complexity under the hood
 - 🌱 **Root commit support** - Can even edit the very first commit
 - ⚠️ **Safety checks** - Warns about uncommitted changes and in-progress rebases
@@ -27,18 +26,33 @@ Navigate to any git repository and run:
 gitshine
 ```
 
+This opens an interactive menu where you can choose:
+
+- **✏️ Reword** - Edit a commit message
+- **📦 Squash** - Combine multiple commits into one
+
 ### Options
 
-| Option | Description |
-|--------|-------------|
+| Option                 | Description                                |
+| ---------------------- | ------------------------------------------ |
 | `-n, --number <count>` | Number of commits to display (default: 20) |
-| `-a, --all` | Show all commits |
-| `-V, --version` | Show version number |
-| `-h, --help` | Show help |
+| `-a, --all`            | Show all commits                           |
+| `-r, --reword`         | Directly reword a commit (skip menu)       |
+| `-s, --squash`         | Directly squash commits (skip menu)        |
+| `-V, --version`        | Show version number                        |
+| `-h, --help`           | Show help                                  |
 
 ```bash
-# Show last 20 commits (default)
+# Interactive mode (shows menu)
 gitshine
+
+# Directly reword a commit
+gitshine --reword
+gitshine -r
+
+# Directly squash commits
+gitshine --squash
+gitshine -s
 
 # Show last 50 commits
 gitshine -n 50
@@ -47,7 +61,9 @@ gitshine -n 50
 gitshine -a
 ```
 
-## Example
+## Examples
+
+### Editing a Commit Message
 
 ```
 $ gitshine
@@ -78,16 +94,52 @@ Note: If this branch has been pushed, you will need to force push:
   git push --force-with-lease
 ```
 
+### Squashing Commits
+
+```
+$ gitshine --squash
+
+✨ gitshine - Shine Up Your Git Commits
+
+Select commits to squash (must be consecutive):
+Use ↑↓ to navigate, Space to select, Enter to confirm
+
+? Select commits to squash:
+  ◯ abc1234 WIP: almost done (John, 1 hour ago)
+  ◉ def5678 WIP: more fixes (John, 2 hours ago)
+  ◉ ghi9012 WIP: initial attempt (John, 3 hours ago)
+  ◯ jkl3456 Add user model (John, 1 day ago)
+
+Commits to squash (oldest to newest):
+  ghi9012 WIP: initial attempt
+  def5678 WIP: more fixes
+
+? Enter squash commit message: Implement user authentication feature
+
+Squash commit message:
+  "Implement user authentication feature"
+
+? Are you sure you want to squash 2 commits? This will rewrite history. Yes
+✔ Squashed 2 commits into one!
+
+To undo: git reset --hard abc1234
+
+Note: If this branch has been pushed, you will need to force push:
+  git push --force-with-lease
+```
+
 ## ⚠️ Important: When to Use This Tool
 
 ### ✅ Good Use Cases
+
 - Personal projects
-- Solo repositories  
+- Solo repositories
 - Local commits not yet pushed
 - Learning/experimental repos
 - Fixing typos before pushing
 
 ### ❌ Bad Use Cases
+
 - Shared team repositories
 - Open source projects with contributors
 - Commits already pushed to remote (unless you're the only contributor)
@@ -95,13 +147,24 @@ Note: If this branch has been pushed, you will need to force push:
 
 ## How It Works
 
-Under the hood, the tool:
+### Reword Mode
+
 1. Checks out the target commit in detached HEAD
 2. Amends the commit message
 3. Rebases all subsequent commits on top
 4. Updates your branch to the new history
 
 This is equivalent to doing `git rebase -i` and marking a commit for `reword`, but without the manual steps.
+
+### Squash Mode
+
+1. Checks out the parent of the oldest selected commit
+2. Cherry-picks all selected commits without committing (stages changes)
+3. Creates a single commit with your new message
+4. Rebases any remaining commits on top
+5. Updates your branch to the new history
+
+This is equivalent to doing `git rebase -i` and marking commits for `squash`, but without the manual steps.
 
 ## Prerequisites
 

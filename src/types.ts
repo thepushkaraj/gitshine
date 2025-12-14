@@ -9,4 +9,6 @@ export interface Commit {
 export interface ProgramOptions {
   number: string;
   all?: boolean;
+  squash?: boolean;
+  reword?: boolean;
 }
