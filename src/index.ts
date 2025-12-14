@@ -106,7 +106,7 @@ async function runSquash(commits: import("./types.js").Commit[]) {
 program
   .name("gitshine")
   .description("Shine up your git commits")
-  .version("0.1.0")
+  .version("0.2.0")
   .option("-n, --number <count>", "Number of commits to display", "20")
   .option("-a, --all", "Show all commits")
   .option("-s, --squash", "Squash multiple commits into one")

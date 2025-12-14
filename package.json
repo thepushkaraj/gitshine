@@ -1,6 +1,6 @@
 {
   "name": "gitshine",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Shine up your git commits - Interactive CLI to edit commit messages",
   "type": "module",
   "main": "dist/index.js",
